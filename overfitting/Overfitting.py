@@ -5,8 +5,8 @@ MyPuntos = None
 
 def main():
     print("Generando lista de polinomios...")
-    MyPuntos = ListaDeRandpol(100)
-    print("Lista generada")
+    MyPuntos = ListaDeRandpol(7)
+    print("Lista generada, ", len(MyPuntos), " puntos")
 
     #for dframe in MyPuntos:
     #    print(dframe)
