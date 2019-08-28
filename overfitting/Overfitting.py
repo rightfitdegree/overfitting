@@ -5,7 +5,7 @@ MyPuntos = None
 
 def main():
     print("Generando lista de polinomios...")
-    MyPuntos = ListaDeRandpol(7)
+    MyPuntos = ListaDeRandpol(100)
     print("Lista generada, ", len(MyPuntos), " puntos")
 
     #for dframe in MyPuntos:
@@ -36,12 +36,12 @@ def ListaDeRandpol(Cantidad):
         p = Process(target=Agregar, args=(ListaParalela,i))  # Passing the list
         p.start()
         processes.append(p)
-    i=1
 
-    for p in processes:
+    
+    for i,p in enumerate(processes):
         p.join() #Espera a que termine el proceso
         print("joined process", i)
-        i +=1
+        
 
     return ListaParalela
       
