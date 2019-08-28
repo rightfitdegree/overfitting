@@ -17,6 +17,8 @@ class RandPol(pd.DataFrame):
     POL = 'Pol'
     ERR = 'Err'
     POL_ERR = 'Pol+Err'
+    POL_ERR_NORM ='Norm(Pol+Err)'
+    POL_NORM = 'Norm(Pol)'
 
     #Constantes para definir los intervalos
     MIN_X = -1.0
@@ -33,6 +35,7 @@ class RandPol(pd.DataFrame):
     GradoDelPolinomio = None
 
     Polinomio = None
+    PolinomioNormalizado = None
 
     #Error = None
 
@@ -46,7 +49,7 @@ class RandPol(pd.DataFrame):
 
 
     def __init__(self, *args, **kwargs):
-        print("Iniciando " + self.__class__.__name__)
+        #print("Iniciando " + self.__class__.__name__)
         super().__init__(*args, **kwargs)
 
         #Creación de puntos aleatorios
@@ -54,12 +57,12 @@ class RandPol(pd.DataFrame):
         self[RandPol.Y] = self.__RandomPoints()
 
         self.GradoDelPolinomio = self.__GradoPolinomialAleatorio()
-        print("Grado del polinomio: " , self.GradoDelPolinomio)
+        #print("Grado del polinomio: " , self.GradoDelPolinomio)
 
         #Obtención de polinomio ajustado a los puntos
         self.Polinomio = self.GenerarPolinomio()
 
-        print("Polinomio: \n", self.Polinomio)
+        #print("Polinomio: \n", self.Polinomio)
 
         #Evaluación del polinomio
         self[RandPol.POL] = self.Polinomio(self[RandPol.X])
@@ -70,10 +73,18 @@ class RandPol(pd.DataFrame):
         self[RandPol.POL_ERR] = self[RandPol.POL] + self[RandPol.ERR]
 
 
-
+        #normalización
         #Obtención de máximos
-        print('Dataframe: \n',self)
+        extremo = max(self[RandPol.POL_ERR], key=abs)
+        self[RandPol.POL_ERR_NORM] = self[RandPol.POL_ERR] / extremo
+        self.PolinomioNormalizado = self.Polinomio / extremo
+        #print("Polinomio normalizado: \n", self.PolinomioNormalizado)
+
+
+
+        #print('Dataframe: \n',self)
         #myplot = self.plot(x =RandPol.X, y =RandPol.Y, kind ='scatter')	
+        print("Terminado RandPol")
 
 
     def  __GradoPolinomialAleatorio(self):
