@@ -2,7 +2,7 @@ import sys
 import VectorAleatorio as VA
 
 def main():
-    MyPuntos = VA.LineaAleatoriaDF()
+    MyPuntos = VA.RandPol()
     print('Puntos: ')
     print(MyPuntos)
     input('Press Enter to exit')
