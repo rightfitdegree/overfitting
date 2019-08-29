@@ -14,10 +14,19 @@ def main():
 
 
     import tensorflow as tf
-    #print(tf.__version__)
-    
     import keras as K
-    #print(K.__version__)
+    from keras.models import Sequential  
+
+
+    model = Sequential()
+    from keras.layers import Dense
+    Tamaño=VA.RandPol.CANTIDAD_PUNTOS
+
+    model.add(Dense(units=Tamaño, input_shape=(Tamaño,),  activation='relu'))
+    model.add(Dense(units=Tamaño, activation='relu'))
+    model.add(Dense(units=Tamaño, activation='relu'))
+
+
 
     input('Press Enter to exit')
 
