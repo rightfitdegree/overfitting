@@ -5,7 +5,7 @@ MyPuntos = None
 
 def main():
     print("Generando lista de polinomios...")
-    MyPuntos = ListaDeRandpol(100)
+    MyPuntos = ListaDeRandpol(10)
     print("Lista generada, ", len(MyPuntos), " puntos")
 
     #for dframe in MyPuntos:
@@ -20,12 +20,16 @@ def main():
 
     model = Sequential()
     from keras.layers import Dense
-    Tamaño=VA.RandPol.CANTIDAD_PUNTOS
+    Tamano=VA.RandPol.CANTIDAD_PUNTOS
 
-    model.add(Dense(units=Tamaño, input_shape=(Tamaño,),  activation='relu'))
-    model.add(Dense(units=Tamaño, activation='relu'))
-    model.add(Dense(units=Tamaño, activation='relu'))
+    model.add(Dense(units=Tamano, input_shape=(Tamano,),  activation='relu'))
+    model.add(Dense(units=Tamano, activation='relu'))
+    #Tamaño=coeficientes polinomiales + overfitting + probabilidad + error distribucion
+    model.add(Dense(units=Tamano+2, activation='relu'))
 
+    model.compile( optimizer='adam' , loss='mean_squared_error')
+
+    model.summary()
 
 
     input('Press Enter to exit')
