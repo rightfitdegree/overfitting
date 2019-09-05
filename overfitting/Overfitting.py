@@ -1,5 +1,6 @@
 import sys
 import VectorAleatorio as VA
+import numpy as np
 
 MyPuntos = None
 
@@ -19,10 +20,10 @@ def main():
 
 
     model = Sequential()
+
     from keras.layers import Dense
     Tamano=VA.RandPol.CANTIDAD_PUNTOS
-
-    model.add(Dense(units=Tamano, input_shape=(Tamano,),  activation='relu'))
+    model.add(Dense(units=Tamano*2, input_shape=(Tamano,),  activation='relu'))
     model.add(Dense(units=Tamano, activation='relu'))
     #Tamaño=coeficientes polinomiales + overfitting + probabilidad + error distribucion
     model.add(Dense(units=Tamano+2, activation='relu'))
@@ -31,11 +32,19 @@ def main():
 
     model.summary()
 
+    #X= MyPuntos[1].XY()
+    X=[points.XY() for points in MyPuntos]
+    Y=[points[VA.RandPol.POL].values for points in MyPuntos]
+    #print('valores: ', X)
+
+    model.fit(x=X,y=Y)
+    #model.fit_generator()
+
 
     input('Press Enter to exit')
 
 
-def Agregar(Lista, i):  # the managed list `L` passed explicitly.
+def Agregar(Lista, i):  
     Lista.append(VA.RandPol())
 
 def ListaDeRandpol(Cantidad):

@@ -86,6 +86,10 @@ class RandPol(pd.DataFrame):
         #myplot = self.plot(x =RandPol.X, y =RandPol.Y, kind ='scatter')	
         print("Terminado RandPol")
 
+    def XY(self):
+        """Returns 'X' column joined to 'Y' column
+        """
+        return np.array( self[RandPol.X].values.tolist() + self[RandPol.Y].values.tolist() )
 
     def  __GradoPolinomialAleatorio(self):
         return random.randint(0,9)
@@ -95,7 +99,8 @@ class RandPol(pd.DataFrame):
             raise Exception('La cantidad de puntos debe ser mayor a 2')
    
         respuesta = np.random.uniform(low=min, high=max, size=cantidad)
-
+        #print('Random uniform:', respuesta)
+        
         return respuesta
 
     def __RandomPointsX(self, cantidad=CANTIDAD_PUNTOS, min=MIN_X, max=MAX_X) -> []:
@@ -105,6 +110,7 @@ class RandPol(pd.DataFrame):
         respuesta = self.__RandomPoints(cantidad, min, max)
         respuesta[0] = min
         respuesta[-1] = max
+        #print(respuesta)
 
         return respuesta
 
