@@ -3,11 +3,17 @@ import VectorAleatorio as VA
 import numpy as np
 
 MyPuntos = None
+def Generar_Puntos():
+    while True:
+        MyPuntos=VA.RandPol()
+        X=MyPuntos.XY()
+        Y=MyPuntos[VA.RandPol.POL].values
+        yield (X,Y)
 
 def main():
-    print("Generando lista de polinomios...")
-    MyPuntos = ListaDeRandpol(10)
-    print("Lista generada, ", len(MyPuntos), " puntos")
+    #print("Generando lista de polinomios...")
+    #MyPuntos = ListaDeRandpol(10)
+    #print("Lista generada, ", len(MyPuntos), " puntos")
 
     #for dframe in MyPuntos:
     #    print(dframe)#
@@ -23,7 +29,7 @@ def main():
 
     from keras.layers import Dense
     Tamano=VA.RandPol.CANTIDAD_PUNTOS
-    model.add(Dense(units=Tamano*2, input_shape=(Tamano,),  activation='relu'))
+    model.add(Dense(units=Tamano*2, input_shape=(1,),  activation='relu'))
     model.add(Dense(units=Tamano, activation='relu'))
     #Tamaño=coeficientes polinomiales + overfitting + probabilidad + error distribucion
     model.add(Dense(units=Tamano+2, activation='relu'))
@@ -31,17 +37,12 @@ def main():
     model.compile( optimizer='adam' , loss='mean_squared_error')
 
     model.summary()
-
-    #X= MyPuntos[1].XY()
-    X=[points.XY() for points in MyPuntos]
-    Y=[points[VA.RandPol.POL].values for points in MyPuntos]
-    #print('valores: ', X)
-
-    model.fit(x=X,y=Y)
-    #model.fit_generator()
-
+         
+    model.fit_generator(Generar_Puntos(),
+                        steps_per_epoch=10000, epochs=10)
 
     input('Press Enter to exit')
+
 
 
 def Agregar(Lista, i):  
