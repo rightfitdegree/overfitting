@@ -32,7 +32,7 @@ def main():
     model.add(Dense(units=Tamano*2, input_shape=(1,),  activation='relu'))
     model.add(Dense(units=Tamano, activation='relu'))
     #Tamaño=coeficientes polinomiales + overfitting + probabilidad + error distribucion
-    model.add(Dense(units=Tamano+2, activation='relu'))
+    model.add(Dense(units=Tamano+2))
 
     model.compile( optimizer='adam' , loss='mean_squared_error')
 
