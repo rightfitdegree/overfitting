@@ -6,8 +6,10 @@ MyPuntos = None
 def Generar_Puntos():
     while True:
         MyPuntos=VA.RandPol()
-        X=MyPuntos.XY()
-        Y=MyPuntos[VA.RandPol.POL].values
+        X=MyPuntos.XY().transpose()
+        Y=MyPuntos[VA.RandPol.POL].values.transpose()
+        print('shape(X)= ',X.shape)
+        print('shape(Y)= ',Y.shape)
         yield (X,Y)
 
 def main():
@@ -29,15 +31,18 @@ def main():
 
     from keras.layers import Dense
     Tamano=VA.RandPol.CANTIDAD_PUNTOS
-    model.add(Dense(units=Tamano*2, input_shape=(1,),  activation='relu'))
+    model.add(Dense(units=Tamano*2, input_shape=(Tamano*2,),  activation='relu'))
     model.add(Dense(units=Tamano, activation='relu'))
     #Tamaño=coeficientes polinomiales + overfitting + probabilidad + error distribucion
-    model.add(Dense(units=Tamano+2))
+    model.add(Dense(units=Tamano, activation='sigmoid',))
 
     model.compile( optimizer='adam' , loss='mean_squared_error')
 
     model.summary()
          
+    from keras.utils import plot_model
+    plot_model(model, to_file='C:\Borrar\model.png')
+
     model.fit_generator(Generar_Puntos(),
                         steps_per_epoch=10000, epochs=10)
 
